@@ -17,10 +17,13 @@ export default function Details(props) {
 
 
     const emailregex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+    const mobileregex=/^(0|91)?[6-9][0-9]{9}$/;
     const LoginValidationSchema = yup.object().shape({
         firstName: yup.string().required('First Name is required'),
         lastName: yup.string().required('last Name is required'),
-        phoneNumber: yup.string().required('Phone Number is required'),
+        phoneNumber: yup.string()
+        .required('Phone Number is required')
+        .matches(mobileregex, "Enter a valid Mobile Number"),
         email: yup.string()
             .required('Email is required')
             .matches(emailregex, "Enter a valid Email Address"),
@@ -122,6 +125,7 @@ console.log('props.route.params?.width',props.route.params?.width,props.route.pa
                             val={values.phoneNumber}
                             onchange={handleChange("phoneNumber")}
                             onBlur={handleBlur("phoneNumber")}
+                            maxLength={10}
                             onError={
                                 errors.phoneNumber && touched.phoneNumber
                                     ? errors.phoneNumber
